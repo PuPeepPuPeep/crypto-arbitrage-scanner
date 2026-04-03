@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from services import bitkub, binance_th
 
 app = FastAPI()
-# app.middleware(CORSMiddleware, allow_origins=["*"], allow_method=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
 
 @app.get("/arbitrage")
 async def get_arbitrage():
