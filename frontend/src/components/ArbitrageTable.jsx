@@ -20,19 +20,19 @@ export default function ArbitrageTable() {
             <table className="w-full text-white">
                 <thead>
                     <tr className="bg-gray-800">
-                        <th>Coin</th>
-                        <th>Bitkub</th>
-                        <th>Binance TH</th>
-                        <th>Spread %</th>
+                        <th class="border border-gray-700">Coin</th>
+                        <th class="border border-gray-700">Bitkub</th>
+                        <th class="border border-gray-700">Binance TH</th>
+                        <th class="border border-gray-700">Spread %</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map(row => (
-                        <tr key={row.coin} className="bg-gray-900">
-                            <td>{row.coin}</td>
-                            <td>{row.bitkub_price}</td>
-                            <td>{row.binance_price}</td>
-                            <td>{row.spread_percent}</td>
+                        <tr key={row.coin} className="bg-gray-900 border border-gray-700 text-center hover:bg-gray-700">
+                            <td class="border border-gray-700">{row.coin}</td>
+                            <td class="border border-gray-700">{row.bitkub_price}</td>
+                            <td class="border border-gray-700">{row.binance_price}</td>
+                            <td class="border border-gray-700">{row.spread_percent}</td>
                         </tr>
                     ))}
                 </tbody>
