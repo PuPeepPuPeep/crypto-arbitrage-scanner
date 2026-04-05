@@ -13,6 +13,8 @@ async def get_arbitrage():
         binance_th.get_ticker()
     )
     
+    usdt_thb_rate = bitkub.parse_price(bitkub_data, "THB_USDT")
+    
     bitkub_coins = set(
         key.replace("THB_", "")
         for key in bitkub_data.keys()
@@ -20,30 +22,34 @@ async def get_arbitrage():
     )
     
     binance_coins = set(
-        item["symbol"].replace("THB", "")
+        item["symbol"].replace("USDT", "")
         for item in binance_data
-        if item["symbol"].endswith("THB")
     )
     
-    pairs = bitkub_coins & binance_coins
+    pairs = (bitkub_coins & binance_coins) - {"USDT"}
     results = []
     
     for coin in pairs:
         bitkub_price = bitkub.parse_price(bitkub_data, f"THB_{coin}")
+        
         binance_price = float(next(
             item["price"] for item in binance_data
-            if item["symbol"] == f"{coin}THB"
+            if item["symbol"] == f"{coin}USDT"
         ))
-        if bitkub_price == 0 or binance_price == 0:
+        binance_price_thb = binance_price * usdt_thb_rate
+        
+        if bitkub_price == 0 or binance_price_thb == 0:
             continue
         
-        spread = ((binance_price - bitkub_price) / bitkub_price) * 100
+        spread = ((binance_price_thb - bitkub_price) / bitkub_price) * 100
         
         results.append({
             "coin": coin,
             "bitkub_price": bitkub_price,
             "binance_price": binance_price,
-            "spread_percent": round(spread, 2),
+            "binance_price_thb": round(binance_price_thb, 4),
+            "usdt_thb_rate": usdt_thb_rate,
+            "spread_percent": round(spread, 2)
         })
         
     return sorted(results, key=lambda x: abs(x["spread_percent"]), reverse=True)

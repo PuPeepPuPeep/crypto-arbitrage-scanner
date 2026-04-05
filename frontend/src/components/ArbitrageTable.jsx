@@ -20,19 +20,37 @@ export default function ArbitrageTable() {
             <table className="w-full text-white">
                 <thead>
                     <tr className="bg-gray-800">
-                        <th class="border border-gray-700">Coin</th>
-                        <th class="border border-gray-700">Bitkub</th>
-                        <th class="border border-gray-700">Binance TH</th>
-                        <th class="border border-gray-700">Spread %</th>
+                        <th className="border border-gray-700">Coin</th>
+                        <th className="border border-gray-700">Bitkub (THB)</th>
+                        <th className="border border-gray-700">Binance TH (THB)</th>
+                        <th className="border border-gray-700">Binance TH (USDT)</th>
+                        <th className="border border-gray-700">Spread %</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map(row => (
                         <tr key={row.coin} className="bg-gray-900 border border-gray-700 text-center hover:bg-gray-700">
-                            <td class="border border-gray-700">{row.coin}</td>
-                            <td class="border border-gray-700">{row.bitkub_price}</td>
-                            <td class="border border-gray-700">{row.binance_price}</td>
-                            <td class="border border-gray-700">{row.spread_percent}</td>
+                            <td className="border border-gray-700">{row.coin}</td>
+                            <td className={
+                                row.bitkub_price < row.binance_price_thb ? 
+                                "text-green-400 border border-gray-700" : 
+                                row.bitkub_price > row.binance_price_thb ? 
+                                "text-red-400 border border-gray-700" : 
+                                "border border-gray-700"
+                            }>
+                                {row.bitkub_price.toLocaleString()}
+                            </td>
+                            <td className={
+                                row.binance_price_thb < row.bitkub_price ?
+                                "text-green-400 border border-gray-700" : 
+                                row.binance_price_thb > row.bitkub_price ? 
+                                "text-red-400 border border-gray-700" :
+                                "border-gray-700"
+                            }>
+                                {row.binance_price_thb.toLocaleString()}
+                            </td>
+                            <td className="border border-gray-700">{row.binance_price}</td>
+                            <td className="border border-gray-700">{row.spread_percent}</td>
                         </tr>
                     ))}
                 </tbody>
