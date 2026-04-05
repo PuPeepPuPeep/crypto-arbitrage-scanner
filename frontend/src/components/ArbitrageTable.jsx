@@ -64,6 +64,7 @@ export default function ArbitrageTable() {
                             <th className="border border-gray-700">Binance TH (USDT)</th>
                             <th className="border border-gray-700">Spread %</th>
                             <th className="border border-gray-700">After Fee</th>
+                            <th className="border border-gray-700">Direction</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,8 +93,9 @@ export default function ArbitrageTable() {
                                         {row.binance_price_thb.toLocaleString()}
                                     </td>
                                     <td className="border border-gray-700">{row.binance_price}</td>
-                                    <td className="border border-gray-700">{row.spread_percent}</td>
+                                    <td className="border border-gray-700">{row.spread_percent.toFixed(2)}</td>
                                     <td className="border border-gray-700">{realSpread}</td>
+                                    <td className="text-sm border border-gray-700">{row.direction}</td>
                                 </tr>
                             )
                         })}
