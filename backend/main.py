@@ -13,12 +13,15 @@ async def get_arbitrage():
         binance_th.get_ticker()
     )
     
-    usdt_thb_rate = bitkub.parse_price(bitkub_data, "THB_USDT")
+    usdt_thb = next(
+        (item for item in bitkub_data if item["symbol"] == "USDT_THB"), None
+    )
+    
+    usdt_thb_rate = float(usdt_thb["last"])
     
     bitkub_coins = set(
-        key.replace("THB_", "")
-        for key in bitkub_data.keys()
-        if key.startswith("THB_")
+        item["symbol"].replace("_THB", "")
+        for item in bitkub_data
     )
     
     binance_coins = set(
@@ -30,18 +33,20 @@ async def get_arbitrage():
     results = []
     
     for coin in pairs:
-        bitkub_price = bitkub.parse_price(bitkub_data, f"THB_{coin}")
-        
+        bitkub_price = float(next(
+            item["last"] for item in bitkub_data
+            if item["symbol"] == f"{coin}_THB"
+        ))
         binance_price = float(next(
             item["price"] for item in binance_data
             if item["symbol"] == f"{coin}USDT"
         ))
+        
         binance_price_thb = binance_price * usdt_thb_rate
         
         if bitkub_price == 0 or binance_price_thb == 0:
             continue
         
-        # spread = ((binance_price_thb - bitkub_price) / bitkub_price) * 100
         spread_bitkub_to_binance = ((binance_price_thb - bitkub_price) / bitkub_price) * 100
         spread_binance_to_bitkub = ((bitkub_price - binance_price_thb) / binance_price_thb) * 100
         
