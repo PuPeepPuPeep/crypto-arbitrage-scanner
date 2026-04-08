@@ -8,9 +8,11 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
 
 @app.get("/arbitrage")
 async def get_arbitrage():
-    bitkub_data, binance_data = await asyncio.gather(
+    bitkub_data, bitkub_status, binance_data, binance_status = await asyncio.gather(
         bitkub.get_ticker(),
-        binance_th.get_ticker()
+        bitkub.get_status(),
+        binance_th.get_ticker(),
+        binance_th.get_status()
     )
     
     usdt_thb = next(
@@ -29,7 +31,7 @@ async def get_arbitrage():
         for item in binance_data
     )
     
-    pairs = (bitkub_coins & binance_coins) - {"USDT"}
+    pairs = (bitkub_status & binance_status)
     results = []
     
     for coin in pairs:
@@ -63,7 +65,7 @@ async def get_arbitrage():
             "binance_price": binance_price,
             "binance_price_thb": round(binance_price_thb, 4),
             "usdt_thb_rate": usdt_thb_rate,
-            "spread_percent": spread,
+            "spread_percent": spread
         })
         
     return sorted(results, key=lambda x: abs(x["spread_percent"]), reverse=True)
