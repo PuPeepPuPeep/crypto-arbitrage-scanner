@@ -52,13 +52,10 @@ async def get_arbitrage():
         
         if spread_bitkub_to_binance == 0 and spread_binance_to_bitkub == 0:
             spread = round(spread_bitkub_to_binance, 2)
-            direction = "-"
         elif spread_bitkub_to_binance >= spread_binance_to_bitkub:
             spread = round(spread_bitkub_to_binance, 2)
-            direction = "Bitkub -> Binance"
         else:
-            spread = round(spread_binance_to_bitkub)
-            direction = "Binance -> Bitkub"
+            spread = round(spread_binance_to_bitkub, 2)
         
         results.append({
             "coin": coin,
@@ -67,7 +64,6 @@ async def get_arbitrage():
             "binance_price_thb": round(binance_price_thb, 4),
             "usdt_thb_rate": usdt_thb_rate,
             "spread_percent": spread,
-            "direction": direction
         })
         
     return sorted(results, key=lambda x: abs(x["spread_percent"]), reverse=True)
