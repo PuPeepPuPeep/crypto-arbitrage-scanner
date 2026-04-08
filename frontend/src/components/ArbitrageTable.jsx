@@ -9,6 +9,8 @@ export default function ArbitrageTable() {
         binance: 0.25
     })
 
+    const [search, setSearch] = useState("")
+
     const fetchData = async () => {
         const result = await axios.get("http://localhost:8000/arbitrage")
         setData(result.data)       
@@ -25,9 +27,13 @@ export default function ArbitrageTable() {
         return (spread - totalFee).toFixed(2)
     }
 
+    const filteredData = data.filter(row =>
+        row.coin.toLowerCase().includes(search.toLowerCase())
+    )
+
     return (
         <div>
-            //Fee input
+            {/*Fee input*/}
             <div className="flex gap-6 mb-4 text-white">
                 <div>
                     <label className="text-sm text-gray-400">Bitkub Fee</label>
@@ -52,10 +58,21 @@ export default function ArbitrageTable() {
                 <div className="self-end pb-1 text-gray-400 text-sm">
                     Total Fee: {(fee.bitkub + fee.binance).toFixed(2)}%
                 </div>
+                {/*Search*/}
+                <div>
+                    <label className="text-sm text-gray-400">Search coin</label>
+                    <input
+                        type="text"
+                        placeholder="Search coin by name"
+                        value={search}
+                        onChange={event => setSearch(event.target.value)}
+                        className="w-full bg-gray-800 text-white rounded px-4 py-2 mb-4 border border-gray-700 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
             </div>
-            //Table
-            <div className="overflow-x-auto">
-                <table className="w-full text-white">
+            {/*Table*/}
+            <div className="overflow-x-auto rounded-lg p-8 bg-gray-600">
+                <table className="w-full text-sm text-white">
                     <thead>
                         <tr className="bg-gray-800">
                             <th className="border border-gray-700">Coin</th>
@@ -67,7 +84,7 @@ export default function ArbitrageTable() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map(row => {
+                        {filteredData.map(row => {
                             const realSpread = calculateRealSpread(row.spread_percent)
                         
                             return (
