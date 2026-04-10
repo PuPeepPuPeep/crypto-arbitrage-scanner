@@ -21,17 +21,8 @@ async def get_arbitrage():
     
     usdt_thb_rate = float(usdt_thb["last"])
     
-    bitkub_coins = set(
-        item["symbol"].replace("_THB", "")
-        for item in bitkub_data
-    )
-    
-    binance_coins = set(
-        item["symbol"].replace("USDT", "")
-        for item in binance_data
-    )
-    
-    pairs = (bitkub_status & binance_status)
+    duplicate_symbols = {"LUNA"}
+    pairs = (bitkub_status & binance_status) - duplicate_symbols
     results = []
     
     for coin in pairs:
