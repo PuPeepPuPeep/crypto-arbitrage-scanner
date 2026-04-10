@@ -2,16 +2,15 @@ import ArbitrageRow from "./ArbitrageRow"
 
 export default function ArbitrageTable({ data, calculateRealSpread }) {
     return (
-        <div className="overflow-x-auto rounded-lg p-8 bg-gray-600">
             <table className="w-full text-sm text-white">
-                <thead>
+                <thead className="sticky top-0">
                     <tr className="bg-gray-800">
-                        <th className="border border-gray-700">Coin</th>
-                        <th className="border border-gray-700">Bitkub (THB)</th>
-                        <th className="border border-gray-700">Binance TH (THB)</th>
-                        <th className="border border-gray-700">Binance TH (USDT)</th>
-                        <th className="border border-gray-700">Spread %</th>
-                        <th className="border border-gray-700">After Fee</th>
+                        <th className="border border-gray-700 w-[75px]">Coin</th>
+                        <th className="border border-gray-700 text-right w-[200px]">Bitkub (THB)</th>
+                        <th className="border border-gray-700 text-right w-[200px]">Binance TH (THB)</th>
+                        <th className="border border-gray-700 text-right w-[200px]">Binance TH (USDT)</th>
+                        <th className="border border-gray-700 text-right w-[90px]">Spread %</th>
+                        <th className="border border-gray-700 text-right w-[90px]">After Fee</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,6 +23,5 @@ export default function ArbitrageTable({ data, calculateRealSpread }) {
                     ))}
                 </tbody>
             </table>
-        </div>
     )
 }
