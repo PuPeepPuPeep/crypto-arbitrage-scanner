@@ -19,7 +19,7 @@ export function useArbitrageData() {
         const fetchData = async () => {
             setStatus("loading")
             try {
-                const response = await axios.get("http://localhost:8000/arbitrage")
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/arbitrage`)
                 setData(response.data)
                 setLastupdate(new Date())
                 setStatus("ok")

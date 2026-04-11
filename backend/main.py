@@ -1,10 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from services import bitkub, binance_th
+from dotenv import load_dotenv
 import asyncio
+import os
+
+load_dotenv()
+
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=origins)
 
 @app.get("/arbitrage")
 async def get_arbitrage():
