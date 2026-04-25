@@ -17,9 +17,19 @@ function App() {
       <div className="px-0 sm:px-8 py-4 shrink-0">
 
         <div className="flex items-start justify-between mb-4">
-          <h1 className="text-white text-2xl font-bold mb-4">
-            Crypto Arbitrage Scanner
-          </h1>
+          <div>
+            <h1 className="text-white text-2xl font-bold mb-1">
+              Crypto Arbitrage Scanner
+            </h1>
+            <a 
+              href="https://github.com/PuPeepPuPeep/crypto-arbitrage-scanner"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-gray-300 text-xs"
+            >
+              View on Github
+            </a>
+          </div>
           <ApiStatus status={status} countdown={countdown} lastUpdate={lastUpdate} />
         </div>
         
