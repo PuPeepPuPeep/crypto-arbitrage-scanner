@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import axios, { spread } from "axios"
+import axios from "axios"
 
 const refresh_interval = 30
 

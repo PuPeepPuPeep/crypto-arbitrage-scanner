@@ -17,7 +17,7 @@ export default function ApiStatus({ status, countdown, lastUpdate}) {
     }
 
     return (
-        <div className="flex flex-col item-end text-sm gap-1">
+        <div className="flex flex-col items-end text-sm gap-1">
             <div className="flex items-center gap-2">
                 <span className={`flex items-center gap-1 ${color}`}>
                     <span className={`w-2 h-2 rounded-full ${dot} ${status === "ok" ? "animate-pulse" : ""}`}>    
