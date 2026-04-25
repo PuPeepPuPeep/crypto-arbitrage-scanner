@@ -7,7 +7,6 @@ export default function FeeInput({ fee, onChange }) {
                     <input
                         type="number"
                         value={value}
-                        step="0.01"
                         onChange={event => onChange({...fee, [key]: parseFloat(event.target.value)})}
                         className="block w-24 bg-gray-800 rounded px-2 py-1 mt-1"
                     />
