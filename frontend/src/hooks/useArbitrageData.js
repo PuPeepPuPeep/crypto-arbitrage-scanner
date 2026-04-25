@@ -9,9 +9,10 @@ export function useArbitrageData() {
         bitkub: 0.25, binance: 0.10
     })
     const [search, setSearch] = useState("")
-    const [lastUpdate, setLastupdate] = useState(null)
+    const [lastUpdate, setLastUpdate] = useState(null)
     const [countdown, setCountdown] = useState(refresh_interval)
     const [status, setStatus] = useState("loading")
+    const [isInitialLoad, setIsIntialLoad] = useState(true)
 
     const countdownRef = useRef(refresh_interval)
 
@@ -21,13 +22,16 @@ export function useArbitrageData() {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/arbitrage`)
                 setData(response.data)
-                setLastupdate(new Date())
+                setLastUpdate(new Date())
                 setStatus("ok")
             } catch (error) {
                 setStatus("error")
+            } finally {
+                setIsIntialLoad(false)
+                countdownRef.current = refresh_interval
+                setCountdown(refresh_interval)
             }
-            countdownRef.current = refresh_interval
-            setCountdown(refresh_interval)
+            
         }
 
         fetchData()

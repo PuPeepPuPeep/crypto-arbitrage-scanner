@@ -3,10 +3,15 @@ import ArbitrageTable from "./components/ArbitrageTable"
 import FeeInput from "./components/FeeInput"
 import SearchBox from "./components/SearchBox"
 import ApiStatus from "./components/ApiStatus"
+import ServerWakeup from "./components/ServerWakeup"
 
 function App() {
-  const { filteredData, fee, setFee, search, setSearch, calculateRealSpread, lastUpdate, countdown, status } = useArbitrageData()
+  const { filteredData, fee, setFee, search, setSearch, calculateRealSpread, lastUpdate, countdown, isInitialLoad, status } = useArbitrageData()
   
+  if (isInitialLoad && status === "loading") {
+    return <ServerWakeup />
+  }
+
   return (
     <div className="h-screen flex flex-col bg-gray-950">
       <div className="px-8 py-4 shrink-0">
