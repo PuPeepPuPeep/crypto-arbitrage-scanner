@@ -12,9 +12,9 @@ export default function ArbitrageRow({ row, realSpread }) {
             <td className={`${baseCell} ${priceColor(row.binance_price_thb, row.bitkub_price)}`}>
                 {row.binance_price_thb.toLocaleString()}
             </td>
-            <td className="text-right font-mono border border-gray-700">{row.binance_price.toLocaleString()}</td>
-            <td className="text-right font-mono border border-gray-700">{row.spread_percent.toFixed(2)}</td>
-            <td className="text-right font-mono border border-gray-700">{realSpread}</td>
+            <td className={baseCell}>{row.binance_price.toLocaleString()}</td>
+            <td className={baseCell}>{row.spread_percent.toFixed(2)}</td>
+            <td className={baseCell}>{realSpread}</td>
         </tr>
     )
 }
