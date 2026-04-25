@@ -51,12 +51,7 @@ async def get_arbitrage():
         spread_bitkub_to_binance = ((binance_price_thb - bitkub_price) / bitkub_price) * 100
         spread_binance_to_bitkub = ((bitkub_price - binance_price_thb) / binance_price_thb) * 100
         
-        if spread_bitkub_to_binance == 0 and spread_binance_to_bitkub == 0:
-            spread = round(spread_bitkub_to_binance, 2)
-        elif spread_bitkub_to_binance >= spread_binance_to_bitkub:
-            spread = round(spread_bitkub_to_binance, 2)
-        else:
-            spread = round(spread_binance_to_bitkub, 2)
+        spread = round(max(spread_bitkub_to_binance, spread_binance_to_bitkub), 2)
         
         results.append({
             "coin": coin,
