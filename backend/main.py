@@ -25,6 +25,8 @@ async def get_arbitrage():
         (item for item in bitkub_data if item["symbol"] == "USDT_THB"), None
     )
     
+    if usdt_thb is None:
+        raise ValueError("USDT_THB pair not found")
     usdt_thb_rate = float(usdt_thb["last"])
     
     duplicate_symbols = {"LUNA"}
