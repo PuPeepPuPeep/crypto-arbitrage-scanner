@@ -12,7 +12,7 @@ export function useArbitrageData() {
     const [lastUpdate, setLastUpdate] = useState(null)
     const [countdown, setCountdown] = useState(refresh_interval)
     const [status, setStatus] = useState("loading")
-    const [isInitialLoad, setIsIntialLoad] = useState(true)
+    const [isInitialLoad, setIsInitialLoad] = useState(true)
 
     const countdownRef = useRef(refresh_interval)
 
@@ -27,7 +27,7 @@ export function useArbitrageData() {
             } catch (error) {
                 setStatus("error")
             } finally {
-                setIsIntialLoad(false)
+                setIsInitialLoad(false)
                 countdownRef.current = refresh_interval
                 setCountdown(refresh_interval)
             }
@@ -56,5 +56,5 @@ export function useArbitrageData() {
         return (spread - totalFee).toFixed(2)
     }
 
-    return { filteredData, fee, setFee, search, setSearch, calculateRealSpread, lastUpdate, countdown, status }
+    return { filteredData, fee, setFee, search, setSearch, calculateRealSpread, lastUpdate, countdown, status, isInitialLoad }
 }
