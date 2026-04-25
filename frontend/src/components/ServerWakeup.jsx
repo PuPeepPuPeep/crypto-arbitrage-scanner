@@ -19,7 +19,7 @@ export default function ServerWakeup() {
                 <p className="text-white text-xl font-semibold mb-1">Server is waking up...</p>
                 <p className="text-gray-400 text-sm">It may take 30-60 seconds</p>
             </div>
-            <div className="w-72 bg-gray-800 rounded-full h2">
+            <div className="w-72 bg-gray-800 rounded-full h-2">
                 <div 
                     className="bg-yellow-400 h-2 rounded-full transition-all duration-1000"
                     style={{ width: `${progress}%` }}
