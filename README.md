@@ -4,6 +4,10 @@
 
 **[🔴 Live Demo](https://crypto-arbitrage-scanner-three.vercel.app)**
 
+## Screenshots
+
+![Crypto Arbitrage Scanner](docs/screenshots/home.png)
+
 ---
 > ⚠️ **คำเตือน:** เครื่องมือนี้จัดทำขึ้นเพื่อการศึกษาเท่านั้น **ไม่ใช่คำแนะนำในการลงทุน** การเทรดคริปโตมีความเสี่ยงสูง ควรศึกษาข้อมูลและตัดสินใจด้วยตัวเองก่อนทำธุรกรรมทางการเงินทุกครั้ง
 ---
@@ -57,7 +61,12 @@ VITE_API_URL=http://localhost:8000
 npm run dev
 ```
 
-## หมายเหตุ
+## Challenges
 
-- Backend ใช้ Render free tier อาจใช้เวลา **30–60 วินาที** ในการโหลดครั้งแรกหลังจากไม่มีผู้ใช้งานสักพัก แอปจะแสดงหน้า loading ระหว่างรอ
-- ราคาทั้งหมดแสดงเป็น THB โดยราคา USDT ของ Binance จะถูกแปลงโดยใช้อัตรา USDT/THB จาก Bitkub
+### 1. การ map ราคาข้าม exchange ที่มี pair coverage ต่างกัน
+
+แผนแรกคือดึงคู่ THB จากทั้ง Bitkub และ Binance TH เพื่อเทียบราคาตรงไปตรงมา แต่พอเช็กพบว่า Binance TH มีคู่ THB น้อยมาก ครอบคลุมเหรียญไม่พอจะหา arbitrage opportunity ได้จริง → เปลี่ยน design เป็นดึงคู่ THB จาก Bitkub และคู่ USDT จาก Binance TH แล้วแปลง USDT→THB โดยอิง rate USDT/THB ของ Bitkub
+
+### 2. Render free tier cold start
+
+Render ปิด container อัตโนมัติเมื่อไม่มี traffic — ครั้งถัดไปที่ user เปิดเว็บ backend ต้องใช้เวลา 30–60 วินาที warm up ทำให้ frontend ค้างหน้าจอเปล่าเหมือนเว็บพัง → เพิ่ม loading screen ที่ frontend แจ้ง state ชัดเจนว่า "เซิร์ฟเวอร์กำลังตื่น" พร้อม progress bar และ elapsed time
